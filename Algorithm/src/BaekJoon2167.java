@@ -12,9 +12,9 @@ public class BaekJoon2167 {
 
 		int N = sc.nextInt();
 		int M = sc.nextInt();
-		int[][] arr = new int[N][M];
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
+		int[][] arr = new int[N + 1][M + 1];
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= M; j++) {
 				arr[i][j] = sc.nextInt();
 			}
 		}
@@ -24,16 +24,19 @@ public class BaekJoon2167 {
 			int j = sc.nextInt();
 			int x = sc.nextInt();
 			int y = sc.nextInt();
-			int[][] dp = new int[N][M];
-			dp[i - 1][j - 1] = arr[i - 1][j - 1];
+			int[][] dp = new int[N + 1][M + 1];
 
-			for (int a = i - 1; a < x; a++) {
-				for (int b = j - 1; b < y; b++) {
-
+			for (int a = i; a <= x; a++) {
+				dp[a][j] = arr[a][j];
+				for (int b = j + 1; b <= y; b++) {
+					dp[a][b] += dp[a][b - 1] + arr[a][b];
 				}
 			}
+			for (int a = i + 1; a <= x; a++) {
+				dp[a][y] += dp[a - 1][y];
+			}
 
-			System.out.println(dp[x - 1][y - 1]);
+			System.out.println(dp[x][y]);
 		}
 	}
 }
