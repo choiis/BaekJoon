@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class BaekJoon1914 {
@@ -6,17 +7,15 @@ public class BaekJoon1914 {
 	private static Scanner sc = null;
 
 	private static int cnt = 0;
-	private static ArrayList<String> arrayList = null;
 
 	private static void hanoiTower(int N, int from, int by, int to) {
 
 		cnt++;
 		if (N == 1) {
-			arrayList.add(from + " " + to);
+			System.out.println(from + " " + to);
 		} else {
-
 			hanoiTower(N - 1, from, to, by);
-			arrayList.add(from + " " + to);
+			System.out.println(from + " " + to);
 			hanoiTower(N - 1, by, from, to);
 		}
 	}
@@ -26,12 +25,11 @@ public class BaekJoon1914 {
 		sc = new Scanner(System.in);
 
 		int N = sc.nextInt();
-		arrayList = new ArrayList<>();
-
-		hanoiTower(N, 1, 2, 3);
-		System.out.println(cnt);
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i));
+		BigInteger bi = new BigInteger("2");
+		BigInteger c = bi.pow(N).subtract(BigInteger.ONE);
+		System.out.println(c);
+		if (N <= 20) {
+			hanoiTower(N, 1, 2, 3);
 		}
 	}
 }
