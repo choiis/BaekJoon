@@ -1,26 +1,32 @@
-import java.io.FileInputStream;
-import java.util.Arrays;
+
+
 import java.util.Scanner;
 
 public class BaekJoon1300 {
 
 	private static Scanner sc = null;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		sc = new Scanner(new FileInputStream("baekjoon1300.txt"));
-		int N = sc.nextInt();
-
-		int[] B = new int[N * N];
-		int cnt = 0;
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= N; j++) {
-				B[cnt++] = i * j;
+		sc = new Scanner(System.in);
+		long N = sc.nextInt();
+		long K = sc.nextInt();
+		long left = 1;
+		long right = K;
+		long ans = 0;
+		while (left <= right) {
+			long cnt = 0;
+			long mid = (left + right) / 2;
+			for (int i = 1; i <= N; i++) {
+				cnt += Math.min(mid / i, N);
+			}
+			if (cnt < K) {
+				left = mid + 1;
+			} else {
+				ans = mid;
+				right = mid - 1;
 			}
 		}
-
-		Arrays.sort(B);
-		int K = sc.nextInt();
-		System.out.println(B[K - 1]);
+		System.out.println(ans);
 	}
 }
