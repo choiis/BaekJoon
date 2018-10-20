@@ -22,6 +22,7 @@ public class BaekJoon15686 {
 
 	private static void dfs(int depth, boolean[] select, int startIdx) {
 		if (depth == M) {
+
 			int sum = 0;
 			for (int i = 0; i < houseList.size(); i++) {
 
@@ -40,6 +41,7 @@ public class BaekJoon15686 {
 				sum += chickenDist;
 			}
 			min = Math.min(sum, min);
+
 			return;
 		} else {
 			for (int i = startIdx; i < chickenlist.size(); i++) {
@@ -47,7 +49,7 @@ public class BaekJoon15686 {
 					continue;
 				}
 				select[i] = true;
-				dfs(depth + 1, select, startIdx + 1);
+				dfs(depth + 1, select, i + 1);
 				select[i] = false;
 			}
 		}
