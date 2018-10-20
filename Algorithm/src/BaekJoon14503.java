@@ -1,4 +1,4 @@
-import java.io.FileInputStream;
+
 import java.util.Scanner;
 
 public class BaekJoon14503 {
@@ -15,9 +15,9 @@ public class BaekJoon14503 {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		sc = new Scanner(new FileInputStream("baekjoon14503.txt"));
+		sc = new Scanner(System.in);
 		int N = sc.nextInt();
 		int M = sc.nextInt();
 		int[][] arr = new int[N][M];

@@ -1,13 +1,11 @@
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class BaekJoon14501 {
 
 	private static Scanner sc = null;
 
-	public static void main(String[] args) throws IOException {
-		sc = new Scanner(new FileInputStream("baekjoon14501.txt"));
+	public static void main(String[] args) {
+		sc = new Scanner(System.in);
 
 		int S = sc.nextInt();
 		for (int s = 0; s < S; s++) {
