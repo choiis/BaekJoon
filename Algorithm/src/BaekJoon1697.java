@@ -7,6 +7,55 @@ public class BaekJoon1697 {
 
 	private static Scanner sc = null;
 
+	private static boolean[] visited = new boolean[100001];
+
+	private static int bfs(int N, int K) {
+		Queue<Location> queue = new LinkedList<>();
+		visited[N] = true;
+		queue.add(new Location(N, 0));
+
+		while (!queue.isEmpty()) {
+			Location location = queue.poll();
+			int now = location.getWhere();
+			int dist = location.getTime();
+			if (now == K) {
+				return dist;
+			}
+
+			for (int i = 0; i < 3; i++) {
+				int next;
+				if (i == 0) { // -1 Ä­ ÀÌµ¿
+					next = now - 1;
+					if (next >= 0 && next <= 100000) {
+						if (!visited[next]) {
+							visited[next] = true;
+							queue.add(new Location(next, dist + 1));
+						}
+					}
+				} else if (i == 1) { // +1 Ä­ ÀÌµ¿
+					next = now + 1;
+					if (next >= 0 && next <= 100000) {
+						if (!visited[next]) {
+							visited[next] = true;
+							queue.add(new Location(next, dist + 1));
+						}
+					}
+				} else { // ¼ø°£ÀÌµ¿
+					next = 2 * now;
+					if (next >= 0 && next <= 100000) {
+						if (!visited[next]) {
+							visited[next] = true;
+							queue.add(new Location(next, dist + 1));
+						}
+					}
+				}
+			}
+		}
+
+		return 0;
+		
+	}
+
 	public static void main(String[] args) {
 
 		sc = new Scanner(System.in);
@@ -14,59 +63,8 @@ public class BaekJoon1697 {
 		int N = sc.nextInt();
 		int K = sc.nextInt();
 
-		Queue<Location> queue = new LinkedList<>();
-		queue.add(new Location(N, 0));
-		int result = 0;
-		while (!queue.isEmpty()) {
-			Location now = queue.poll();
+		System.out.println(bfs(N, K));
 
-			boolean flag = false;
-
-			for (int i = 0; i < 3; i++) {
-				if (i == 0) {
-					int where = now.getWhere() + 1;
-					int time = now.getTime() + 1;
-
-					if (where == K) {
-						flag = true;
-						result = time;
-						break;
-					} else {
-						queue.add(new Location(where, time));
-					}
-				} else if (i == 1) {
-
-					int where = now.getWhere() - 1;
-					int time = now.getTime() + 1;
-
-					if (where == K) {
-						flag = true;
-						result = time;
-						break;
-					} else {
-						queue.add(new Location(where, time));
-					}
-				} else {
-
-					int where = now.getWhere() * 2;
-					int time = now.getTime() + 1;
-
-					if (where == K) {
-						flag = true;
-						result = time;
-						break;
-					} else {
-						queue.add(new Location(where, time));
-					}
-				}
-			}
-
-			if (flag) {
-				break;
-			}
-		}
-
-		System.out.println(result);
 	}
 }
 
