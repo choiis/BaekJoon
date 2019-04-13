@@ -1,62 +1,66 @@
-import java.io.FileInputStream;
-import java.util.Arrays;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class BaekJoon1325 {
 
 	private static Scanner sc = null;
 
-	private static int[] computer = null;
+	public static void main(String[] args) {
 
-	private static boolean[][] connect = null;
-
-	private static int MAX = Integer.MIN_VALUE;
-
-	private static void bfs_cnt(int start) {
-
-		Queue<Integer> queue = new LinkedList<>();
-		queue.add(start);
-		int cnt = 1;
-		while (!queue.isEmpty()) {
-			int now = queue.poll();
-			for (int i = 0; i < connect[now].length; i++) {
-				if (connect[now][i]) {
-					queue.add(i);
-					cnt++;
-				}
-			}
-		}
-		computer[start] = cnt;
-		if (MAX < cnt) {
-			MAX = cnt;
-		}
-	}
-
-	public static void main(String[] args) throws Exception {
-
-		sc = new Scanner(new FileInputStream("baekjoon1325.txt"));
+		sc = new Scanner(System.in);
 
 		int N = sc.nextInt();
 		int M = sc.nextInt();
-		connect = new boolean[N][N];
-		computer = new int[N];
 
-		for (int i = 0; i < M; i++) {
-			int x = sc.nextInt();
-			int y = sc.nextInt();
-			connect[y - 1][x - 1] = true;
+		Vector<Vector<Integer>> vec = new Vector<>();
+		for (int i = 0; i <= N; i++) {
+			vec.add(new Vector<>());
+		}
+		int[] indegree = new int[N + 1];
+		int[] dp = new int[N + 1];
+		for (int i = 1; i <= M; i++) {
+			int u = sc.nextInt();
+			int v = sc.nextInt();
+			vec.get(u).add(v);
+			indegree[v]++;
 		}
 
-		for (int i = 0; i < N; i++) {
-			bfs_cnt(i);
-		}
-
-		for (int i = 0; i < computer.length; i++) {
-			if (MAX == computer[i]) {
-				System.out.print((i + 1) + " ");
+		Queue<Integer> queue = new LinkedList<>();
+		for (int i = 1; i <= N; i++) {
+			dp[i] = 1;
+			if (indegree[i] == 0) {
+				queue.add(i);
 			}
+		}
+
+		while (!queue.isEmpty()) {
+			int now = queue.poll();
+			for (int i = 0; i < vec.get(now).size(); i++) {
+				int next = vec.get(now).get(i);
+				dp[next] += dp[now];
+				indegree[next]--;
+				if (indegree[next] == 0) {
+					queue.add(next);
+				}
+			}
+		}
+
+		Vector<Integer> v = new Vector<>();
+		int max = Integer.MIN_VALUE;
+		for (int i = 1; i <= N; i++) {
+			if (max < dp[i]) {
+				max = dp[i];
+				v.clear();
+				v.add(i);
+			} else if (max == dp[i]) {
+				v.add(i);
+			}
+		}
+		for (int i = 0; i < v.size(); i++) {
+			System.out.print(v.get(i) + " ");
 		}
 	}
 }
