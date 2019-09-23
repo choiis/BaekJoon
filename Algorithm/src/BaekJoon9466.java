@@ -1,5 +1,4 @@
 
-import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class BaekJoon9466 {
@@ -9,10 +8,11 @@ public class BaekJoon9466 {
 	private static int N;
 	private static int[] graph;
 	private static int[] cycle;
-	// 0 방문 X
-	// 1 방문 한번
-	// 2 방문 두번 = >Cycle이다
+	// 0 방문 false
+	// 1 방문 한번 
+	// 2 방문 두번 => Cycle이다
 
+	// 현재 시간 초과
 	private static void dfs(int now) {
 		if (cycle[now] == 2) {
 			return;
